@@ -6,14 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import Crypt_Algo.AES;
-import Crypt_Algo.MD5;
+import Crypt_Algo.*;
 
 public class MessagePane extends JPanel implements MessageListener {
 
     private final ChatClient client;
     private AES a = new AES();
     private MD5 m = new MD5();
+    private DigitalSignature ds = new DigitalSignature();
     private String hash1 = "";
     private String hash2 = "";
     private final String login;
@@ -39,6 +39,7 @@ public class MessagePane extends JPanel implements MessageListener {
                     String t = inputField.getText();
                     hash1 = m.getMd5(t);
                     String text = a.encrypt(t, secretKey);
+                    ds.signDigitally(text);
                     client.msg(login, text, hash1);
                     listModel.addElement("You: " + t);
                     inputField.setText("");
@@ -52,14 +53,19 @@ public class MessagePane extends JPanel implements MessageListener {
     @Override
     public void onMessage(String fromLogin, String msgBody, String hash) {
         if (login.equalsIgnoreCase(fromLogin)) {
-            msgBody = a.decrypt(msgBody, secretKey);
-            hash2 = m.getMd5(msgBody);
-            if (hash2.equals(hash)) {
-                String line = fromLogin + ": " + msgBody;
-                listModel.addElement(line);
+            boolean ver = ds.verifySignature(msgBody);
+            if(ver) {
+                msgBody = a.decrypt(msgBody, secretKey);
+                hash2 = m.getMd5(msgBody);
+                if (hash2.equals(hash)) {
+                    String line = fromLogin + ": " + msgBody;
+                    listModel.addElement(line);
+                } else {
+                    JOptionPane.showMessageDialog(null, "HASH NOT MATCHING !");
+                }
             }
-            else {
-               JOptionPane.showMessageDialog(null,"HASH NOT MATCHING !");
+            else{
+                JOptionPane.showMessageDialog(null,"CANNOT VERIFY !");
             }
         }
     }
