@@ -1,5 +1,6 @@
 package Crypt_Algo;
 
+//IMPORT STATEMENTS
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.*;
@@ -10,6 +11,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 
 public class DigitalSignature {
+    //Function to digitally sign the text being sent
     public void signDigitally(String enc){
         try {
             // Get instance and initialize a KeyPairGenerator object.
@@ -40,6 +42,7 @@ public class DigitalSignature {
             e.printStackTrace();
         }
     }
+    //Function to verify the digitally signed data
     public boolean verifySignature(String crypt){
         try {
             byte[] publicKeyEncoded = Files.readAllBytes(Paths.get("publickey"));

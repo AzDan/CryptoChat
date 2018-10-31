@@ -1,16 +1,13 @@
 package Crypt_Algo;
 
-
+//IMPORT STATEMENTS
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-// Java program to calculate MD5 hash value
 public class MD5 {
-    public String getMd5(String input)
-    {
+    public String getMd5(String input) {
         try {
-
             // Static getInstance method is called with hashing MD5
             MessageDigest md = MessageDigest.getInstance("MD5");
 
@@ -28,8 +25,6 @@ public class MD5 {
             }
             return hashtext;
         }
-
-        // For specifying wrong message digest algorithms
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }

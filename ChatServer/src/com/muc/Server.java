@@ -1,5 +1,6 @@
 package com.muc;
 
+//IMPORT STATEMENTS
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,8 +29,10 @@ public class Server extends Thread {
                 System.out.println("About to accept client connection...");
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Accepted connection from " + clientSocket);
+                //Spawing a new thread to handle the new client
                 ServerWorker worker = new ServerWorker(this, clientSocket);
                 workerList.add(worker);
+                //Start the new thread
                 worker.start();
             }
         } catch (IOException e) {
@@ -37,6 +40,7 @@ public class Server extends Thread {
         }
     }
 
+    //Remove the thread when job is finished
     public void removeWorker(ServerWorker serverWorker) {
         workerList.remove(serverWorker);
     }

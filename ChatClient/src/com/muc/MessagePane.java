@@ -1,11 +1,11 @@
 package com.muc;
 
+//IMPORT STATEMENTS
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import Crypt_Algo.*;
 
 public class MessagePane extends JPanel implements MessageListener {
@@ -32,9 +32,11 @@ public class MessagePane extends JPanel implements MessageListener {
         add(new JScrollPane(messageList), BorderLayout.CENTER);
         add(inputField, BorderLayout.SOUTH);
 
+        //Sending a new message to another user
         inputField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //MAIN CODE. Hashing,Encryption and Digital signature implementation
                 try {
                     String t = inputField.getText();
                     hash1 = m.getMd5(t);
@@ -50,9 +52,11 @@ public class MessagePane extends JPanel implements MessageListener {
         });
     }
 
+    //Received a new message from a user
     @Override
     public void onMessage(String fromLogin, String msgBody, String hash) {
         if (login.equalsIgnoreCase(fromLogin)) {
+            //MAIN CODE. Verify digital signature, hash and decrypt message.
             boolean ver = ds.verifySignature(msgBody);
             if(ver) {
                 msgBody = a.decrypt(msgBody, secretKey);

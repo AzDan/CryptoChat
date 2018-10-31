@@ -1,11 +1,9 @@
 package com.muc;
 
-import ch.qos.logback.classic.Logger;
+//IMPORT STATEMENTS
 import org.apache.commons.lang3.StringUtils;
-
 import java.io.*;
 import java.net.Socket;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -61,7 +59,6 @@ public class ServerWorker extends Thread {
                 }
             }
         }
-
         clientSocket.close();
     }
 
@@ -128,9 +125,6 @@ public class ServerWorker extends Thread {
     private void handleLogin(OutputStream outputStream, String[] tokens) throws IOException {
         if (tokens.length == 2) {
             String login = tokens[1];
-            //String password = tokens[2];
-
-            //if ((login.equals("guest") && password.equals("guest")) || (login.equals("jim") && password.equals("jim")) ) {
                 String msg = "ok login\n";
                 outputStream.write(msg.getBytes());
                 this.login = login;
