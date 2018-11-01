@@ -13,7 +13,7 @@ Teibok Lang Chyne -
 
 
 
-ABOUT
+## ABOUT
 CryptoChat is a multi user/server architecture chat application that has the following features:
 1. Encrypted chats (End-To-End encryption with the AES algorithm)
 2. Hashing (Ensuring integrity of the messages sent to other users)
